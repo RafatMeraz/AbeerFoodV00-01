@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/singleCategoryImgIV"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/pizza"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/singleCategoryNameTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_black"
+        android:gravity="center_horizontal"
+        android:padding="2dp"
+        android:text="Category Name"
+        android:textColor="@color/dark_white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/singleCategoryImgIV"
+        app:layout_constraintEnd_toEndOf="@+id/singleCategoryImgIV"
+        app:layout_constraintStart_toStartOf="@+id/singleCategoryImgIV"
+        app:layout_constraintTop_toTopOf="@+id/singleCategoryImgIV" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/singleShopCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@android:color/white"
+    app:elevation="6dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/restaurantImgView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pizza" />
+
+        <LinearLayout
+            android:id="@+id/shopNameLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:weightSum="12"
+            app:layout_constraintTop_toBottomOf="@+id/restaurantImgView">
+
+            <TextView
+                android:id="@+id/shopDetailShopNameTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="12"
+                android:text="ShopName"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="-16dp" />
+
+            <ImageView
+                android:id="@+id/shopDetailActiveStateImgView"
+                android:layout_width="20sp"
+                android:layout_height="8dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="12dp"
+                app:srcCompat="@drawable/ic_green" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/shopDetailShopCategoryTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="Categories"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/shopNameLinearLayout"
+            tools:layout_editor_absoluteX="-16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/shopDetailShopCategoryTV">
+
+            <TextView
+                android:id="@+id/shopDetailLocationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dhanmondi"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/shopDetailOpenHoursTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12.30PM-11.00PM"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/singleNewShopFavouriteIV"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/shopNameLinearLayout"
+            app:layout_constraintEnd_toEndOf="@+id/restaurantImgView"
+            app:srcCompat="@drawable/ic_favoutrite" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
