@@ -42,6 +42,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+//
+//        if (!Constraints.isConnectedToInternet(this)){
+//            finish();
+//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+//        }
 
         initialization();
     }

@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Constraints.getCategory(getApplicationContext());
 
+
         if (!SharedPrefManager.getInstance(this).isLoggedIn()){
             startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
             finish();
@@ -135,9 +136,11 @@ public class HomeActivity extends AppCompatActivity {
                     SharedPrefManager.getInstance(this).getUserName()
             );
         }
+//        if (!Constraints.isConnectedToInternet(this)){
+//            finish();
+//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+//        }
         super.onResume();
     }
-
-
 
 }

@@ -3,6 +3,7 @@ package com.example.abeerfoodv0_0.fragments;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -41,6 +42,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.adapters.CartAdapter;
 import com.example.abeerfoodv0_0.adapters.FoodAdapter;
 import com.example.abeerfoodv0_0.adapters.ShopAdapter;
@@ -123,6 +125,12 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         blankCartTV = view.findViewById(R.id.blankCartTV);
         shopIV = view.findViewById(R.id.cartShopImgView);
         cartButton = view.findViewById(R.id.placeOrderButton);
+//
+//        if (!Constraints.isConnectedToInternet(getActivity())){
+//            getActivity().finish();
+//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+//        }
+
 
         //Location Fetcher
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);

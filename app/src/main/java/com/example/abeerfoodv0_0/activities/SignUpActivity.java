@@ -43,7 +43,10 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
         }
-
+//        if (!Constraints.isConnectedToInternet(this)){
+//            finish();
+//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+//        }
         initialization();
     }
 

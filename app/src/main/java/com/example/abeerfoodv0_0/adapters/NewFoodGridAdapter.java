@@ -52,7 +52,6 @@ public class NewFoodGridAdapter extends BaseAdapter {
         TextView shopNameTV = view.findViewById(R.id.shopDetailShopNameTV);
         TextView locationTV = view.findViewById(R.id.shopDetailLocationTV);
         TextView openingTV = view.findViewById(R.id.shopDetailOpenHoursTV);
-        TextView categoryTV = view.findViewById(R.id.shopDetailShopCategoryTV);
         ImageView activeStatusIV = view.findViewById(R.id.shopDetailActiveStateImgView);
         final ImageView favIV = view.findViewById(R.id.singleNewShopFavouriteIV);
         CardView cardView = view.findViewById(R.id.singleShopCardView);

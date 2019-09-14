@@ -42,85 +42,102 @@
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:elevation="6dp"
+        app:cardCornerRadius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
-        <ImageView
-            android:id="@+id/cartShopImgView"
-            android:layout_width="120dp"
-            android:layout_height="90dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/pizza" />
-
         <LinearLayout
-            android:id="@+id/linearLayout4"
+            android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar3">
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/cartShopImgView"
+                android:layout_width="120dp"
+                android:layout_height="90dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/pizza" />
 
             <LinearLayout
-                android:id="@+id/shopNameLinearLayout"
+                android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="12"
-                app:layout_constraintTop_toBottomOf="@+id/restaurantImgView"
-                tools:layout_editor_absoluteY="24dp">
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar3">
+
+                <LinearLayout
+                    android:id="@+id/shopNameLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="12"
+                    app:layout_constraintTop_toBottomOf="@+id/restaurantImgView"
+                    tools:layout_editor_absoluteY="24dp">
+
+                    <TextView
+                        android:id="@+id/cartShopNameTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="12"
+                        android:text="ShopName"
+                        android:textColor="@color/text_color"
+                        android:textSize="20sp"
+                        tools:layout_editor_absoluteX="-16dp" />
+
+                    <ImageView
+                        android:id="@+id/cartActiveStateImgView"
+                        android:layout_width="20sp"
+                        android:layout_height="8dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="12dp"
+                        app:srcCompat="@drawable/ic_green" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/cartShopNameTV"
-                    android:layout_width="0dp"
+                    android:id="@+id/cartLocationTV"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_weight="12"
-                    android:text="ShopName"
+                    android:layout_margin="4dp"
+                    android:text="Dhanmondi"
                     android:textColor="@color/text_color"
-                    android:textSize="20sp"
-                    tools:layout_editor_absoluteX="-16dp" />
+                    android:textSize="18sp" />
 
-                <ImageView
-                    android:id="@+id/cartActiveStateImgView"
-                    android:layout_width="20sp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="12dp"
-                    app:srcCompat="@drawable/ic_green" />
-
+                <TextView
+                    android:id="@+id/cartOpenHoursTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="12.30PM-11.00PM"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/cartLocationTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Dhanmondi"
-                android:textColor="@color/text_color"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/cartOpenHoursTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="12.30PM-11.00PM"
-                android:textColor="@color/text_color"
-                android:textSize="18sp" />
         </LinearLayout>
-
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
@@ -131,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"

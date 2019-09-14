@@ -64,10 +64,14 @@ public class ShopDetailsActivity extends AppCompatActivity {
         shopNameTV = findViewById(R.id.shopDetailShopNameTV);
         locataionTV = findViewById(R.id.shopDetailLocationTV);
         openHourTV = findViewById(R.id.shopDetailOpenHoursTV);
-        categoryTV = findViewById(R.id.shopDetailShopCategoryTV);
         moreInfoTV = findViewById(R.id.shopDetailShopDetailTV);
         foodRecyclerView = findViewById(R.id.shopDetailsFoodDetailsRecyclerview);
         backButton = findViewById(R.id.shopDetailBackButton);
+
+//        if (!Constraints.isConnectedToInternet(this)){
+//            finish();
+//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+//        }
 
         loadShopDetails(currentShopID);
 

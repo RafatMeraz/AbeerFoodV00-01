@@ -39,11 +39,16 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+//        if (!Constraints.isConnectedToInternet(this)){
+//            finish();
+//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+//        }
         if (SharedPrefManager.getInstance(this).isLoggedIn()){
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
         }
+
+
 
         initialization();
     }

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
 import com.example.abeerfoodv0_0.adapters.FavouriteAdapter;
 import com.example.abeerfoodv0_0.database.DatabaseHandler;
@@ -54,6 +55,11 @@ public class FavouriteFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+
+//        if (Constraints.isConnectedToInternet(getActivity())){
+//            getActivity().finish();
+//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+//        }
 
 
         shopList = (ArrayList<Shop>) new DatabaseHandler(getActivity()).getAllFavs(Constraints.currentUser.getId());

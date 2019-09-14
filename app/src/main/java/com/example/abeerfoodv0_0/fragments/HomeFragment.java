@@ -1,10 +1,12 @@
 package com.example.abeerfoodv0_0.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -28,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ProfileActivity;
 import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
 import com.example.abeerfoodv0_0.adapters.NewFoodGridAdapter;
@@ -38,6 +41,7 @@ import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.model.Slider;
 import com.example.abeerfoodv0_0.model.User;
 import com.example.abeerfoodv0_0.utils.Constraints;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,12 +67,14 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private TextView userNameTV, filterTV;
     private SliderLayout sliderLayout;
     private CircleImageView homeProfileIV;
+    private SwipeRefreshLayout homeSwipeRefreshLayout;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +86,12 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         filterTV = view.findViewById(R.id.homeFilterButton);
         sliderLayout = view.findViewById(R.id.homeSliderLayout);
         homeProfileIV = view.findViewById(R.id.homeProfileIV);
+        homeSwipeRefreshLayout = view.findViewById(R.id.homeFragmentSwipeRefreshLayout);
+
+//        if (Constraints.isConnectedToInternet(getActivity())){
+//            getActivity().finish();
+//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+//        }
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -96,9 +108,32 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         allShopsRecyclerView.setLayoutManager(linearLayout);
         allShopsRecyclerView.setNestedScrollingEnabled(false);
 
-        loadSliders();
-        loadNewShopList();
-        loadShopList();
+        if (Constraints.isConnectedToInternet(getActivity())){
+            homeSwipeRefreshLayout.setRefreshing(true);
+            loadSliders();
+            loadNewShopList();
+            loadShopList();
+        } else {
+            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+            getActivity().finish();
+        }
+
+
+        homeSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                homeSwipeRefreshLayout.setRefreshing(true);
+                loadShopList();
+                loadNewShopList();
+            }
+        });
+
+        homeSwipeRefreshLayout.setColorSchemeColors(
+                R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark
+        );
 
         allShopsRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), allShopsRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -246,6 +281,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                                 }
 
                             });
+
+                            homeSwipeRefreshLayout.setRefreshing(false);
 
                             //creating adapter object and setting it to recyclerview
 //                            newShopRecyclerView.setNumColumns(newShopList.size());

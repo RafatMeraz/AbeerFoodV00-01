@@ -1,5 +1,6 @@
 package com.example.abeerfoodv0_0.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,8 +41,12 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        currentUser = (User) getIntent().getSerializableExtra("user");
+//        if (!Constraints.isConnectedToInternet(this)){
+//            finish();
+//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+//        }
 
+        currentUser = (User) getIntent().getSerializableExtra("user");
         initialization();
 
     }

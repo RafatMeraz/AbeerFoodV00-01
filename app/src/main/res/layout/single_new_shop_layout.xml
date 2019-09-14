@@ -7,7 +7,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:background="@android:color/white"
-    app:elevation="6dp">
+    app:elevation="6dp"
+    android:paddingBottom="4dp"
+    app:cardCornerRadius="4dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,6 +23,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:scaleType="fitXY"
+            app:layout_constraintCircleRadius="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,43 +63,34 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/shopDetailShopCategoryTV"
+            android:id="@+id/shopDetailLocationTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginTop="4dp"
             android:text="Categories"
             android:textColor="@color/text_color"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/shopNameLinearLayout"
-            tools:layout_editor_absoluteX="-16dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopNameLinearLayout" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/shopDetailOpenHoursTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/shopDetailShopCategoryTV">
-
-            <TextView
-                android:id="@+id/shopDetailLocationTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dhanmondi"
-                android:textColor="@color/text_color"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/shopDetailOpenHoursTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12.30PM-11.00PM"
-                android:textColor="@color/text_color"
-                android:textSize="18sp" />
-        </LinearLayout>
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="12.30PM-11.00PM"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopDetailLocationTV" />
 
         <ImageView
             android:id="@+id/singleNewShopFavouriteIV"

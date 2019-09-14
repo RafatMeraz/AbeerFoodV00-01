@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
 import com.example.abeerfoodv0_0.adapters.FavouriteAdapter;
 import com.example.abeerfoodv0_0.adapters.ShopAdapter;
@@ -73,6 +74,13 @@ public class SearchFragment extends Fragment {
         searchBar = view.findViewById(R.id.searchBar);
         searchRV = view.findViewById(R.id.searchRecyclerView);
         swipeRefreshLayout = view.findViewById(R.id.searchSwipeRefreshLayout);
+
+//        if (Constraints.isConnectedToInternet(getActivity())){
+//            getActivity().finish();
+//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+//        }
+
+
         shopList = new ArrayList<>();
         suggestionList = new ArrayList<>();
         resultShopList = new ArrayList<>();

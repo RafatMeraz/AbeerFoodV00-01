@@ -80,7 +80,6 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.MyViewHolder> 
             shopNameTV = itemView.findViewById(R.id.shopDetailShopNameTV);
             locationTV = itemView.findViewById(R.id.shopDetailLocationTV);
             openingTV = itemView.findViewById(R.id.shopDetailOpenHoursTV);
-            categoryTV = itemView.findViewById(R.id.shopDetailShopCategoryTV);
             activeStatusIV = itemView.findViewById(R.id.shopDetailActiveStateImgView);
             favIV = itemView.findViewById(R.id.singleNewShopFavouriteIV);
         }
