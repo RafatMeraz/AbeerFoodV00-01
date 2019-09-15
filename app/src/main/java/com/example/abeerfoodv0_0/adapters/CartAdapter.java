@@ -42,6 +42,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         myViewHolder.foodNameTV.setText(cartArrayList.get(i).getProductName());
         myViewHolder.priceTV.setText("$ "+cartArrayList.get(i).getPrice());
         myViewHolder.quantityButton.setNumber(String.valueOf(cartArrayList.get(i).getQuantity()));
+
         myViewHolder.quantityButton.setRange(1, 10);
         myViewHolder.quantityButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override

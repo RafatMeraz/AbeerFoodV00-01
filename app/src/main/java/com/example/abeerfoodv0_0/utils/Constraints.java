@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constraints {
+    public static final String IMG_BASE_URL = "http://192.168.0.104/Android/images/";
     private static final String BASE_URL = "http://192.168.0.104/Android/v1/";
     public static final String USER_REG_URL = BASE_URL +"registerUser.php";
     public static final String USER_LOGIN_URL = BASE_URL +"userLogin.php";
@@ -38,6 +39,9 @@ public class Constraints {
     public static final String USER_DETAILS_URL = BASE_URL +"userDetails.php";
     public static final String UPDATE_USER_URL = BASE_URL +"updateUser.php";
     public static final String CATEGORY_URL = BASE_URL +"foodCategory.php";
+    public static final String ORDERS_URL = BASE_URL +"allOrderOfUser.php";
+    public static final String ORDER_FOOD_URL = BASE_URL +"insertOrder.php";
+    public static final String UPLOAD_PROFILE_IMAGE_URL = BASE_URL +"uploadProfileImg.php";
 
     public static User currentUser;
     public static User currentUserDetails;

@@ -68,12 +68,14 @@ public class ShopDetailsActivity extends AppCompatActivity {
         foodRecyclerView = findViewById(R.id.shopDetailsFoodDetailsRecyclerview);
         backButton = findViewById(R.id.shopDetailBackButton);
 
-//        if (!Constraints.isConnectedToInternet(this)){
-//            finish();
-//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
-//        }
+        if (Constraints.isConnectedToInternet(this)) {
+            loadShopDetails(currentShopID);
+        }else{
+            startActivity(new Intent(this, NetConnectionFailedActivity.class));
+            finish();
+        }
 
-        loadShopDetails(currentShopID);
+
 
         foodList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

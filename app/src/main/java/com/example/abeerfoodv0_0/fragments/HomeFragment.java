@@ -42,6 +42,7 @@ import com.example.abeerfoodv0_0.model.Slider;
 import com.example.abeerfoodv0_0.model.User;
 import com.example.abeerfoodv0_0.utils.Constraints;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,8 +112,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         if (Constraints.isConnectedToInternet(getActivity())){
             homeSwipeRefreshLayout.setRefreshing(true);
             loadSliders();
-            loadNewShopList();
             loadShopList();
+            loadNewShopList();
         } else {
             startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
             getActivity().finish();
@@ -381,6 +382,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                                     userResponse.getString("phone_number"),
                                     userResponse.getString("image")
                             );
+                            if (!Constraints.currentUserDetails.getImg().equals("default.png"))
+                                Picasso.with(getActivity()).load(Constraints.IMG_BASE_URL+Constraints.currentUserDetails.getImg()).into(homeProfileIV);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

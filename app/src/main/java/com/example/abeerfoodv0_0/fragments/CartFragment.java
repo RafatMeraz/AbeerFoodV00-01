@@ -2,30 +2,25 @@ package com.example.abeerfoodv0_0.fragments;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.internal.NavigationMenuItemView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,14 +37,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.abeerfoodv0_0.R;
-import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.adapters.CartAdapter;
-import com.example.abeerfoodv0_0.adapters.FoodAdapter;
-import com.example.abeerfoodv0_0.adapters.ShopAdapter;
 import com.example.abeerfoodv0_0.database.DatabaseHandler;
 import com.example.abeerfoodv0_0.database.SharedPrefManager;
 import com.example.abeerfoodv0_0.model.Cart;
-import com.example.abeerfoodv0_0.model.Food;
+import com.example.abeerfoodv0_0.model.Order;
 import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.utils.Constraints;
 import com.google.android.gms.common.ConnectionResult;
@@ -60,7 +52,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,10 +61,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import q.rorbin.badgeview.QBadgeView;
-
-import static com.example.abeerfoodv0_0.activities.HomeActivity.navView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,11 +75,14 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
     public static TextView totalCostTV;
     private ImageView activeStatusIV, clearCartIV, shopIV;
     public static double totalPrice;
+    public static int totalQuantity;
     private Button cartButton;
+    private CartAdapter adapter;
+    private CardView cardView;
 
     //Location Fetcher
     private Location location;
-    private Double latitudeTV, longitudeTV ;
+    private Double latitude, longitude;
     private GoogleApiClient googleApiClient;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private LocationRequest locationRequest;
@@ -103,6 +93,7 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
     private ArrayList<String> permissions = new ArrayList<>();
     // integer for permissions results request
     private static final int ALL_PERMISSIONS_RESULT = 1011;
+
 
 
 
@@ -125,11 +116,7 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         blankCartTV = view.findViewById(R.id.blankCartTV);
         shopIV = view.findViewById(R.id.cartShopImgView);
         cartButton = view.findViewById(R.id.placeOrderButton);
-//
-//        if (!Constraints.isConnectedToInternet(getActivity())){
-//            getActivity().finish();
-//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
-//        }
+        cardView = view.findViewById(R.id.cartShopDetailsCardView);
 
 
         //Location Fetcher
@@ -165,18 +152,14 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         totalCostTV.setText(String.valueOf(totalPrice));
 
         cartRecyclerView.setLayoutManager(layoutManager);
-        final CartAdapter adapter = new CartAdapter(allCartList, getActivity());
+        adapter = new CartAdapter(allCartList, getActivity());
         cartRecyclerView.setAdapter(adapter);
 
         if ( SharedPrefManager.getInstance(getActivity()).getShopID() != 0){
             blankCartTV.setVisibility(View.GONE);
             loadShopDetails(SharedPrefManager.getInstance(getActivity()).getShopID());
         } else {
-            shopNameTV.setVisibility(View.GONE);
-            locationTV.setVisibility(View.GONE);
-            opeingTV.setVisibility(View.GONE);
-            activeStatusIV.setVisibility(View.GONE);
-            shopIV.setVisibility(View.GONE);
+            cardView.setVisibility(View.GONE);
             blankCartTV.setVisibility(View.VISIBLE);
         }
 
@@ -219,7 +202,8 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAlertDialog();
+                if (allCartList.size() > 0)
+                    showAlertDialog();
             }
         });
 
@@ -274,7 +258,7 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         RadioButton shipToHomeAddress = order_address.findViewById(R.id.shipToaHomeAddressRadioButton);
         RadioButton shipToGivenAddress = order_address.findViewById(R.id.shipToaGivenAddressRadioButton);
         RadioButton shipToCurrentAddress = order_address.findViewById(R.id.shipToThisAddressRadioButton);
-        EditText noteET = order_address.findViewById(R.id.commentET);
+        final EditText noteET = order_address.findViewById(R.id.commentET);
 
         alertDialog.setView(order_address);
         alertDialog.setIcon(R.drawable.ic_shopping_cart_blue);
@@ -293,14 +277,9 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
                 geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
                 try {
-                    addresses = geocoder.getFromLocation(latitudeTV, longitudeTV, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                     String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    String city = addresses.get(0).getLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    String knownName = addresses.get(0).getFeatureName();
-                    addressET.setText(address+" "+city+" "+state+" "+country+" "+postalCode+" "+knownName);
+                    addressET.setText(address);
 
                 } catch (IOException e) {
                     DynamicToast.makeError(getActivity(), "Couldn't Fetch your current location. Please turn on your location or internet!", Toast.LENGTH_LONG).show();
@@ -311,12 +290,93 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                String item_list = "";
+                for (Cart cart:allCartList)
+                    totalQuantity += cart.getQuantity();
+                for (Cart cart : allCartList){
+                    item_list+= cart.getProductName()+":"+cart.getQuantity()+" ";
+                }
+                Order newOrder = new Order(
+                        Constraints.currentUser.getId(),
+                        currentShop.getId(),
+                        totalQuantity,
+                        totalPrice,
+                        latitude,
+                        longitude,
+                        item_list,
+                        addressET.getText().toString(),
+                        noteET.getText().toString(),
+                        2,
+                        "dsfdsfdsf45454545"
+                        );
+                if (Constraints.isConnectedToInternet(getActivity())) {
+                    orderFood(newOrder);
+                }
             }
         });
 
         alertDialog.setNegativeButton("CANCEL", null);
         alertDialog.show();
+    }
+
+    private void orderFood(final Order newOrder) {
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setTitle("Placing order");
+        dialog.setMessage("Please wait a while...");
+        dialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.ORDER_FOOD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            dialog.hide();
+                            JSONObject msg = new JSONObject(response);
+                            Log.e("response : ", response.toString());
+
+                            if (msg.getBoolean("error"))
+                                DynamicToast.makeError(getActivity(), msg.getString("message"), Toast.LENGTH_SHORT).show();
+                            else{
+                                DynamicToast.makeSuccess(getActivity(), msg.getString("message"), Toast.LENGTH_SHORT).show();
+                                allCartList.clear();
+                                adapter.notifyDataSetChanged();
+                                SharedPrefManager.getInstance(getActivity()).setShopId(0);
+                                cardView.setVisibility(View.GONE);
+                                new DatabaseHandler(getActivity()).deleteCarts(Constraints.currentUser.getId());
+                            }
+
+                            //adding the shop to shop list
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", String.valueOf(newOrder.getUserId()));
+                params.put("shop_id", String.valueOf(newOrder.getShopId()));
+                params.put("item_list", newOrder.getItemList());
+                params.put("total_price", String.valueOf(newOrder.getPrice()));
+                params.put("note", newOrder.getNote());
+                params.put("total_quantity", String.valueOf(newOrder.getQuantity()));
+                params.put("payment_id", String.valueOf(newOrder.getPaymentMethod()));
+                params.put("transaction_id", newOrder.getTransactionID());
+                params.put("latitude", String.valueOf(newOrder.getLatitude()));
+                params.put("longitude", String.valueOf(newOrder.getLongitude()));
+                params.put("address", newOrder.getAddress());
+
+                return params;
+            }
+        };
+
+        //adding our stringrequest to queue
+        Volley.newRequestQueue(getActivity()).add(stringRequest);
     }
 
     private void loadShopDetails(final int id) {
@@ -385,9 +445,9 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         if (location != null) {
-            latitudeTV = location.getLatitude();
-            longitudeTV = location.getLongitude();
-            Log.e("Location: ", latitudeTV+" "+longitudeTV);
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            Log.e("Location: ", latitude +" "+ longitude);
         }
 
         startLocationUpdates();
@@ -448,9 +508,9 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            latitudeTV = location.getLatitude();
-            longitudeTV = location.getLongitude();
-            Log.e("Location: ", latitudeTV+" "+longitudeTV);
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            Log.e("Location: ", latitude +" "+ longitude);
 
         }
 

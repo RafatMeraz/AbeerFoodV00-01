@@ -53,11 +53,23 @@
 
         </android.support.v7.widget.Toolbar>
 
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/editProfileImgIVSpa"
+            app:layout_constraintEnd_toEndOf="@+id/editProfileImgIVSpa"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/editProfileImgIVSpa"
+            app:srcCompat="@drawable/ic_edit_black_24dp"
+            tools:ignore="MissingConstraints" />
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/editProfileImgIV"
+            android:id="@+id/editProfileImgIVSpa"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="8dp"
+            android:clickable="true"
             android:src="@drawable/user_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +87,7 @@
             android:hint="Full name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editProfileImgIV">
+            app:layout_constraintTop_toBottomOf="@+id/editProfileImgIVSpa">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editProfileFullNameET"

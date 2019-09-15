@@ -80,6 +80,7 @@ public class SignInActivity extends AppCompatActivity {
         final String email = emailET.getText().toString();
         final String password = passwordET.getText().toString();
 
+        mProgressDialog.setTitle("Logging");
         mProgressDialog.setMessage("Please wait for a while...");
         mProgressDialog.show();
 

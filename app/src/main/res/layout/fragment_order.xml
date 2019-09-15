@@ -10,6 +10,8 @@
         android:id="@+id/toolbar8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:background="@color/dark_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

@@ -42,11 +42,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-//
-//        if (!Constraints.isConnectedToInternet(this)){
-//            finish();
-//            startActivity(new Intent(this, NetConnectionFailedActivity.class));
-//        }
 
         initialization();
     }
@@ -61,7 +56,12 @@ public class ProfileActivity extends AppCompatActivity {
         logOutButton = findViewById(R.id.profileLogOutButton);
         address2TV = findViewById(R.id.profileAddress2TV);
         editButton = findViewById(R.id.profileEditButton);
-        loadUserDetails(Constraints.currentUser.getId());
+        if (Constraints.isConnectedToInternet(getApplicationContext()))
+            loadUserDetails(Constraints.currentUser.getId());
+        else{
+            startActivity(new Intent(getApplicationContext(), NetConnectionFailedActivity.class));
+            finish();
+        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +112,9 @@ public class ProfileActivity extends AppCompatActivity {
                                     SharedPrefManager.getInstance(getApplicationContext()).getUserEmail(),
                                     SharedPrefManager.getInstance(getApplicationContext()).getUserName()
                             );
+                            if (!user.getImg().equals("default.png"))
+                                Picasso.with(getApplicationContext()).load(Constraints.IMG_BASE_URL+user.getImg()).into(userImageIV);
+                            Log.e( "onResponse: ", user.getImg());
                             userFullNameTV.setText(user.getName());
                             emailTV.setText(user.getEmail());
                             phoneTV.setText(user.getPhone());

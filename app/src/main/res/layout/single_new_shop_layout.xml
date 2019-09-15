@@ -34,7 +34,8 @@
             android:id="@+id/shopNameLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="12"
             app:layout_constraintTop_toBottomOf="@+id/restaurantImgView">
@@ -71,7 +72,7 @@
             android:layout_marginTop="4dp"
             android:text="Categories"
             android:textColor="@color/text_color"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shopNameLinearLayout" />
@@ -86,7 +87,7 @@
             android:layout_marginBottom="8dp"
             android:text="12.30PM-11.00PM"
             android:textColor="@color/text_color"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
