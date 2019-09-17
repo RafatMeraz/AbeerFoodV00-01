@@ -54,6 +54,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -224,8 +225,10 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
                                     }
                                 })
                                 .setNegativeButton("CANCEL", null)
+                                .setCancelable(false)
                                 .show();
                     } else {
+
                         showAlertDialog();
                     }
                 }
@@ -273,6 +276,13 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
     }
 
     private void showAlertDialog() {
+        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.myDialog));
         alertDialog.setTitle("One more Step");
         alertDialog.setMessage("Enter your shipping address");
@@ -297,6 +307,12 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         shipToCurrentAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
                 Geocoder geocoder;
                 List<Address> addresses;
                 geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -434,6 +450,9 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
                             if (currentShop.getIsOpen()==0){
                                 activeStatusIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_inactive_red));
                             }
+                            if (currentShop.getImage() != "default.png"){
+                                Picasso.with(getActivity()).load(Constraints.IMG_BASE_URL+currentShop.getImage()).into(shopIV);
+                            }
                             //adding the shop to shop list
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -505,6 +524,7 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         if (!checkPlayServices()) {
             DynamicToast.makeError(getActivity(), "You need to install Google Play Services to use the App properly", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override

@@ -129,7 +129,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            mProgressDialog.hide();
+                            mProgressDialog.dismiss();
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getBoolean("error")) {
                                 DynamicToast.makeError(getApplicationContext(),  jsonObject.getString("message"), Toast.LENGTH_SHORT).show();

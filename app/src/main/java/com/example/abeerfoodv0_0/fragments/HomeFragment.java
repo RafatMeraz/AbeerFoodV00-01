@@ -2,11 +2,15 @@ package com.example.abeerfoodv0_0.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -91,10 +95,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         homeProfileIV = view.findViewById(R.id.homeProfileIV);
         homeSwipeRefreshLayout = view.findViewById(R.id.homeFragmentSwipeRefreshLayout);
 
-//        if (Constraints.isConnectedToInternet(getActivity())){
-//            getActivity().finish();
-//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
-//        }
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -360,7 +360,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                             JSONObject userResponse = new JSONObject(response);
                             Log.e("response : ", response.toString());
 
-                            Constraints.currentUserDetails= new User(
+                            User user = new User(
                                     id,
                                     userResponse.getString("email"),
                                     userResponse.getString("name"),
@@ -369,7 +369,10 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                                     userResponse.getString("phone_number"),
                                     userResponse.getString("image")
                             );
-                            if (!Constraints.currentUserDetails.getImg().equals("default.png"))
+
+                            Constraints.currentUserDetails = user;
+
+                            if (!user.getImg().equals("default.png"))
                                 Picasso.with(getActivity()).load(Constraints.IMG_BASE_URL+Constraints.currentUserDetails.getImg()).into(homeProfileIV);
 
                         } catch (JSONException e) {
