@@ -1,6 +1,8 @@
 package com.example.abeerfoodv0_0.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import com.example.abeerfoodv0_0.model.Food;
 import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.utils.Constraints;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +47,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private ImageButton backButton;
     private ArrayList<Food> foodList;
     private Shop currentShop;
+    private SwipeRefreshLayout rootSwipeRefreshLayout;
 
 
     @Override
@@ -57,6 +61,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initialization() {
         favIV = findViewById(R.id.shopDetailsFavouriteIV);
         shopCoverIV = findViewById(R.id.shopDetailCoverIV);
@@ -67,6 +72,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
         moreInfoTV = findViewById(R.id.shopDetailShopDetailTV);
         foodRecyclerView = findViewById(R.id.shopDetailsFoodDetailsRecyclerview);
         backButton = findViewById(R.id.shopDetailBackButton);
+        rootSwipeRefreshLayout = findViewById(R.id.shopDetailsSwipeToRefresh);
+
 
         if (Constraints.isConnectedToInternet(this)) {
             loadShopDetails(currentShopID);
@@ -74,8 +81,19 @@ public class ShopDetailsActivity extends AppCompatActivity {
             startActivity(new Intent(this, NetConnectionFailedActivity.class));
             finish();
         }
+        rootSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadShopList(currentShopID);
+            }
+        });
 
-
+        rootSwipeRefreshLayout.setColorSchemeColors(
+                R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark
+        );
 
         foodList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -128,6 +146,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
     private void loadShopList(final int id) {
 
+        rootSwipeRefreshLayout.setRefreshing(true);
+        foodList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.FOODS_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -156,7 +176,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                             //creating adapter object and setting it to recyclerview
                             FoodAdapter adapter = new FoodAdapter(foodList, getApplicationContext());
                             foodRecyclerView.setAdapter(adapter);
-                            Log.e("ERROR : ", foodList.toString());
+                            rootSwipeRefreshLayout.setRefreshing(false);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -209,6 +229,9 @@ public class ShopDetailsActivity extends AppCompatActivity {
                             }
                             if (new DatabaseHandler(getApplicationContext()).isFav(currentShop.getId(), Constraints.currentUser.getId())) {
                                 favIV.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.ic_favorite_full));
+                            }
+                            if (currentShop.getImage()!="default.png"){
+                                Picasso.with(getApplicationContext()).load(Constraints.IMG_BASE_URL+currentShop.getImage()).into(shopCoverIV);
                             }
                             //adding the shop to shop list
                         } catch (JSONException e) {

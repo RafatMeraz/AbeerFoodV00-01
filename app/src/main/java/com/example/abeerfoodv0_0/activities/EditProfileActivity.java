@@ -1,5 +1,6 @@
 package com.example.abeerfoodv0_0.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -176,11 +177,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void updateUser() {
 
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setTitle("Updating Profile...");
+        dialog.setMessage("Please Wait a while....");
+        dialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.UPDATE_USER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            dialog.dismiss();
                             JSONObject userResponse = new JSONObject(response);
                             Log.e("response : ", response.toString());
                             if (userResponse.getBoolean("error")==false) {

@@ -65,7 +65,9 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/homeFragmentSwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <android.support.v4.widget.NestedScrollView
@@ -80,7 +82,6 @@
                     android:id="@+id/homeSliderLayout"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -90,7 +91,7 @@
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:background="@android:color/white"
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/homeSliderLayout">
@@ -105,32 +106,35 @@
                         android:text="@string/new_to_abeer_food"
                         android:textColor="@color/text_color"
                         android:textSize="20sp" />
+
                     <HorizontalScrollView
+                        android:id="@+id/title_horizontalScrollView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        android:id="@+id/title_horizontalScrollView"
                         android:layout_margin="1dp"
-                        android:fillViewport="false">
+                        android:fillViewport="false"
+                        android:scrollbars="none">
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="2dp">
+
                             <GridView
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="8dp"
+                                android:id="@+id/homeNewShopRecyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/homeNewShopRecyclerView"
-                                android:drawSelectorOnTop="true"
-                                android:horizontalSpacing="8dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="8dp"
                                 android:clickable="true"
+                                android:drawSelectorOnTop="true"
                                 android:focusable="false"
-                                android:paddingBottom="4dp"
                                 android:focusableInTouchMode="false"
                                 android:gravity="center"
-                                android:scrollbars="horizontal"/>
+                                android:horizontalSpacing="8dp"
+                                android:paddingBottom="4dp"
+                                android:scrollbars="horizontal" />
 
                         </LinearLayout>
 
@@ -151,10 +155,10 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/homeRestaurantRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:scrollbars="vertical"
                     android:background="@android:color/white"
+                    android:scrollbars="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

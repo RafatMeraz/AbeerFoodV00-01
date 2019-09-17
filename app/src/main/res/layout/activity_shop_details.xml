@@ -1,150 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/shopDetailsSwipeToRefresh"
     android:background="@color/background_color"
     tools:context=".activities.ShopDetailsActivity">
 
-    <ImageView
-        android:id="@+id/shopDetailCoverIV"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pizza" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:padding="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopDetailCoverIV">
+        <ImageView
+            android:id="@+id/shopDetailCoverIV"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pizza" />
 
         <LinearLayout
-            android:id="@+id/shopNameLinearLayout"
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="12"
-            app:layout_constraintTop_toBottomOf="@+id/restaurantImgView"
-            tools:layout_editor_absoluteY="24dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/shopDetailCoverIV">
+
+            <LinearLayout
+                android:id="@+id/shopNameLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="12"
+                app:layout_constraintTop_toBottomOf="@+id/restaurantImgView"
+                tools:layout_editor_absoluteY="24dp">
+
+                <TextView
+                    android:id="@+id/shopDetailShopNameTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="12"
+                    android:text="ShopName"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="-16dp" />
+
+                <ImageView
+                    android:id="@+id/shopDetailActiveStateImgView"
+                    android:layout_width="20sp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="12dp"
+                    app:srcCompat="@drawable/ic_green" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/shopDetailShopNameTV"
-                android:layout_width="0dp"
+                android:id="@+id/shopDetailLocationTV"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:layout_weight="12"
-                android:text="ShopName"
+                android:text="Categories"
                 android:textColor="@color/text_color"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:layout_marginTop="2dp"
+                app:layout_constraintTop_toBottomOf="@+id/shopNameLinearLayout"
                 tools:layout_editor_absoluteX="-16dp" />
 
-            <ImageView
-                android:id="@+id/shopDetailActiveStateImgView"
-                android:layout_width="20sp"
-                android:layout_height="14dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="12dp"
-                app:srcCompat="@drawable/ic_green" />
+            <TextView
+                android:id="@+id/shopDetailOpenHoursTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12.30PM-11.00PM"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/shopDetailShopDetailTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="More Info About Shop"
+                android:textSize="20sp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/link_text_color"
+                android:paddingBottom="4dp"/>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/shopDetailLocationTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="Categories"
-            android:textColor="@color/text_color"
-            android:textSize="18sp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/shopNameLinearLayout"
-            tools:layout_editor_absoluteX="-16dp" />
+        <ImageButton
+            android:id="@+id/shopDetailBackButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/shopDetailsFoodDetailsRecyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
-            android:id="@+id/shopDetailOpenHoursTV"
-            android:layout_width="match_parent"
+            android:id="@+id/textView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="12.30PM-11.00PM"
-            android:layout_marginTop="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Avaiable foods for you"
+            app:layout_constraintStart_toStartOf="parent"
             android:textColor="@color/text_color"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/shopDetailShopDetailTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="More Info About Shop"
             android:textSize="20sp"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/link_text_color"
-            android:paddingBottom="4dp"/>
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/shopDetailBackButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/shopDetailsFoodDetailsRecyclerview"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Avaiable foods for you"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/text_color"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-    <ImageView
-        android:id="@+id/shopDetailsFavouriteIV"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_favoutrite" />
+        <ImageView
+            android:id="@+id/shopDetailsFavouriteIV"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_favoutrite" />
 
 
+    </android.support.constraint.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,23 +1,23 @@
 package com.example.abeerfoodv0_0.model;
 
 public class Slider {
-    private int shop_id;
+    private int id;
     private String image;
 
     public Slider() {
     }
 
-    public Slider(int shop_id, String image) {
-        this.shop_id = shop_id;
+    public Slider(int id, String image) {
+        this.id = id;
         this.image = image;
     }
 
-    public int getShop_id() {
-        return shop_id;
+    public int getId() {
+        return id;
     }
 
-    public void setShop_id(int shop_id) {
-        this.shop_id = shop_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImage() {

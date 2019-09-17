@@ -107,11 +107,10 @@ public class ProfileActivity extends AppCompatActivity {
                                     userResponse.getString("image")
                             );
                             SharedPrefManager.getInstance(getApplicationContext()).userLogin(Constraints.currentUser.getId(), user.getName(), user.getEmail());
-                            Constraints.currentUser = new User(
-                                    SharedPrefManager.getInstance(getApplicationContext()).getUserID(),
-                                    SharedPrefManager.getInstance(getApplicationContext()).getUserEmail(),
-                                    SharedPrefManager.getInstance(getApplicationContext()).getUserName()
-                            );
+                            Constraints.currentUser = new User(id, user.getEmail(), user.getName());
+                            Constraints.currentUserDetails = user;
+
+
                             if (!user.getImg().equals("default.png"))
                                 Picasso.with(getApplicationContext()).load(Constraints.IMG_BASE_URL+user.getImg()).into(userImageIV);
                             Log.e( "onResponse: ", user.getImg());

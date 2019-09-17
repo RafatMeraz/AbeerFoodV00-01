@@ -15,6 +15,7 @@ import com.example.abeerfoodv0_0.database.DatabaseHandler;
 import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.utils.Constraints;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,10 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.MyViewHolder> 
             }
         });
 
+        if (shopArrayList.get(i).getImage()!="default.png"){
+            Picasso.with(context).load(Constraints.IMG_BASE_URL+shopArrayList.get(i).getImage()).into(myViewHolder.restaurantIV);
+        }
+
     }
 
     @Override
@@ -82,6 +87,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.MyViewHolder> 
             openingTV = itemView.findViewById(R.id.shopDetailOpenHoursTV);
             activeStatusIV = itemView.findViewById(R.id.shopDetailActiveStateImgView);
             favIV = itemView.findViewById(R.id.singleNewShopFavouriteIV);
+            restaurantIV = itemView.findViewById(R.id.restaurantImgView);
         }
     }
 

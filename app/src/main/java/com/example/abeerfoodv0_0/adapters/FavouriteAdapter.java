@@ -16,6 +16,7 @@ import com.example.abeerfoodv0_0.fragments.CartFragment;
 import com.example.abeerfoodv0_0.model.Cart;
 import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.utils.Constraints;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,9 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
         myViewHolder.shopNameTV.setText(favouriteArrayList.get(i).getShopName());
         myViewHolder.locationTV.setText(favouriteArrayList.get(i).getLocation());
         myViewHolder.openingHoursTV.setText(favouriteArrayList.get(i).getOpenAt()+"-"+favouriteArrayList.get(i).getCloseAT());
+        if (favouriteArrayList.get(i).getImage() != "default.png"){
+            Picasso.with(context).load(Constraints.IMG_BASE_URL+favouriteArrayList.get(i).getImage()).into(myViewHolder.imageView);
+        }
     }
 
     @Override

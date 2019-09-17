@@ -75,10 +75,6 @@ public class SearchFragment extends Fragment {
         searchRV = view.findViewById(R.id.searchRecyclerView);
         swipeRefreshLayout = view.findViewById(R.id.searchSwipeRefreshLayout);
 
-//        if (Constraints.isConnectedToInternet(getActivity())){
-//            getActivity().finish();
-//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
-//        }
 
 
         shopList = new ArrayList<>();
@@ -88,7 +84,6 @@ public class SearchFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         searchRV.setLayoutManager(layoutManager);
-        loadShopList();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -109,6 +104,13 @@ public class SearchFragment extends Fragment {
         customSuggestionsAdapter.setSuggestions(suggestionList);
 
         searchBar.setCustomSuggestionAdapter(customSuggestionsAdapter);
+
+        if (Constraints.isConnectedToInternet(getActivity())){
+            loadShopList();
+        } else {
+            getActivity().finish();
+            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+        }
 
         searchRV.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), searchRV ,new RecyclerItemClickListener.OnItemClickListener() {

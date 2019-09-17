@@ -56,13 +56,13 @@ public class FavouriteFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-//        if (Constraints.isConnectedToInternet(getActivity())){
-//            getActivity().finish();
-//            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
-//        }
+        if (Constraints.isConnectedToInternet(getActivity())){
+            shopList = (ArrayList<Shop>) new DatabaseHandler(getActivity()).getAllFavs(Constraints.currentUser.getId());
+        }else{
+            getActivity().finish();
+            startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+        }
 
-
-        shopList = (ArrayList<Shop>) new DatabaseHandler(getActivity()).getAllFavs(Constraints.currentUser.getId());
 
         if (shopList.size() <= 0)
             blankTV.setVisibility(View.VISIBLE);

@@ -17,6 +17,7 @@ import com.example.abeerfoodv0_0.database.DatabaseHandler;
 import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.utils.Constraints;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,7 @@ public class NewFoodGridAdapter extends BaseAdapter {
         ImageView activeStatusIV = view.findViewById(R.id.shopDetailActiveStateImgView);
         final ImageView favIV = view.findViewById(R.id.singleNewShopFavouriteIV);
         CardView cardView = view.findViewById(R.id.singleShopCardView);
+        ImageView shopIV = view.findViewById(R.id.restaurantImgView);
 
         shopNameTV.setText(shopArrayList.get(position).getShopName());
         locationTV.setText(shopArrayList.get(position).getLocation());
@@ -63,6 +65,9 @@ public class NewFoodGridAdapter extends BaseAdapter {
             activeStatusIV.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_inactive_red));
         if (new DatabaseHandler(mContext).isFav(shopArrayList.get(position).getId(), Constraints.currentUser.getId())) {
             favIV.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_favorite_full));
+        }
+        if (shopArrayList.get(position).getImage()!="default.png"){
+            Picasso.with(mContext).load(Constraints.IMG_BASE_URL+shopArrayList.get(position).getImage()).into(shopIV);
         }
 
         cardView.setOnClickListener(new View.OnClickListener() {

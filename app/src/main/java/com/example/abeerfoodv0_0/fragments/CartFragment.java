@@ -4,12 +4,15 @@ package com.example.abeerfoodv0_0.fragments;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -202,8 +205,30 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allCartList.size() > 0)
-                    showAlertDialog();
+                if (allCartList.size() > 0){
+                    LocationManager lm = (LocationManager)getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+                    boolean gps_enabled = false;
+
+                    try {
+                        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                    } catch(Exception ex) {}
+
+                    if(!gps_enabled) {
+                        // notify user
+                        new AlertDialog.Builder(getActivity())
+                                .setMessage("Please enable your GPS Location")
+                                .setPositiveButton("ENABLE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                        getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", null)
+                                .show();
+                    } else {
+                        showAlertDialog();
+                    }
+                }
             }
         });
 
@@ -342,6 +367,9 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
                                 SharedPrefManager.getInstance(getActivity()).setShopId(0);
                                 cardView.setVisibility(View.GONE);
                                 new DatabaseHandler(getActivity()).deleteCarts(Constraints.currentUser.getId());
+                                totalPrice = 0.0;
+                                totalCostTV.setText(""+totalPrice);
+                                blankCartTV.setVisibility(View.VISIBLE);
                             }
 
                             //adding the shop to shop list

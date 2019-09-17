@@ -27,8 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.abeerfoodv0_0.R;
 import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ProfileActivity;
@@ -125,6 +127,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
             public void onRefresh() {
                 homeSwipeRefreshLayout.setRefreshing(true);
                 loadShopList();
+                loadSliders();
                 loadNewShopList();
             }
         });
@@ -150,21 +153,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     }
                 })
         );
-/*
-        newShopRecyclerView.setOnClickListener(
-                new RecyclerItemClickListener(getActivity(), newShopRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
-                        intent.putExtra("shop_id", newShopList.get(position).getId());
-                        startActivity(intent);
-                    }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );*/
 
         userNameTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +178,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
     private void loadShopList() {
-
+        shopList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constraints.SHOPS_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -239,6 +228,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void loadNewShopList() {
 
+        newShopList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constraints.NEW_SHOPS_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -307,6 +297,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void loadSliders() {
 
+        sliderList.clear();
+        sliderLayout.removeAllSliders();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constraints.SLIDERS_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -323,29 +315,24 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
                                 //adding the shop to shop list
                                 sliderList.add(new Slider(
-                                        shop.getInt("shop_id"),
+                                        shop.getInt("id"),
                                         shop.getString("image")
                                 ));
                             }
 
-//                            for(Slider slider : sliderList){
-//                                TextSliderView textSliderView = new TextSliderView(getActivity());
-//                                // initialize a SliderLayout
-//                                textSliderView
-//                                        .image(slider.getImage())
-//                                        .setScaleType(BaseSliderView.ScaleType.Fit);
-//
-////                                //add your extra information
-////                                textSliderView.bundle(new Bundle());
-////                                textSliderView.getBundle()
-////                                        .putString("extra",name);
-//
-//                                sliderLayout.addSlider(textSliderView);
-//                            }
-//                            sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
-//                            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-//                            sliderLayout.setCustomAnimation(new DescriptionAnimation());
-//                            sliderLayout.setDuration(4000);
+                            for(Slider slider : sliderList){
+                                TextSliderView textSliderView = new TextSliderView(getActivity());
+                                // initialize a SliderLayout
+                                textSliderView
+                                        .image(Constraints.IMG_BASE_URL+slider.getImage())
+                                        .setScaleType(BaseSliderView.ScaleType.Fit);
+
+                                sliderLayout.addSlider(textSliderView);
+                            }
+                            sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                            sliderLayout.setCustomAnimation(new DescriptionAnimation());
+                            sliderLayout.setDuration(5000);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -429,5 +416,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     public void onResume() {
         super.onResume();
         String userName = "<u>"+ Constraints.currentUser.getName() +"</u>";
-        userNameTV.setText(Html.fromHtml(userName));    }
+        userNameTV.setText(Html.fromHtml(userName));
+        sliderLayout.startAutoCycle();
+    }
 }
