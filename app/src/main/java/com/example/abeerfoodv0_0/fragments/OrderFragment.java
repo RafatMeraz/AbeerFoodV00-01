@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,13 +25,19 @@ import com.example.abeerfoodv0_0.adapters.ShopAdapter;
 import com.example.abeerfoodv0_0.database.DatabaseHandler;
 import com.example.abeerfoodv0_0.model.Order;
 import com.example.abeerfoodv0_0.model.Shop;
+import com.example.abeerfoodv0_0.model.Slider;
+import com.example.abeerfoodv0_0.model.User;
 import com.example.abeerfoodv0_0.utils.Constraints;
+import com.example.abeerfoodv0_0.utils.MySingleton;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +48,7 @@ public class OrderFragment extends Fragment {
 
 
     private RecyclerView recyclerView;
-    private ArrayList<Order> orderList;
+    private ArrayList<com.example.abeerfoodv0_0.model.Request> orderList;
 
     public OrderFragment() {
         // Required empty public constructor
@@ -55,7 +62,6 @@ public class OrderFragment extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_order, container, false);
         recyclerView = rootView.findViewById(R.id.orderHistoryRecyclerView);
 
-        orderList = new ArrayList<>();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -78,35 +84,30 @@ public class OrderFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONArray shop = new JSONArray(response);
-                            for (int i=0; i<shop.length(); i++){
-                                JSONObject order = shop.getJSONObject(i);
-                                orderList.add(new Order(
+                            orderList = new ArrayList<>();
+                            JSONArray array = new JSONArray(response);
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject order = array.getJSONObject(i);
+                                com.example.abeerfoodv0_0.model.Request request = new com.example.abeerfoodv0_0.model.Request(
                                         order.getInt("id"),
-                                        order.getInt("user_id"),
                                         order.getInt("shop_id"),
                                         order.getInt("total_quantity"),
-                                        order.getInt("driver_id"),
                                         order.getInt("status"),
                                         order.getDouble("total_price"),
-                                        order.getDouble("latitude"),
-                                        order.getDouble("longitude"),
                                         order.getString("item_list"),
-                                        order.getString("address"),
-                                        order.getString("note"),
-                                        order.getInt("payment_id"),
-                                        order.getString("transaction_id")
-                                ));
+                                        order.getString("shop_name")
+                                );
+                                orderList.add(request);
                             }
 
+                            Collections.reverse(orderList);
                             OrderAdapter adapter = new OrderAdapter(orderList, getActivity());
                             recyclerView.setAdapter(adapter);
 
-                            //adding the shop to shop list
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -128,4 +129,7 @@ public class OrderFragment extends Fragment {
     }
 
 
+
+
 }
+
