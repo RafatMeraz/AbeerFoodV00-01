@@ -45,21 +45,20 @@ public class HomeActivity extends AppCompatActivity {
         @SuppressLint("ResourceType")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction t = fm.beginTransaction();
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     if (currentFragment != R.id.navigation_home){
+                        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                         Fragment mFrag = new HomeFragment();
                         t.replace(R.id.frameLayout, mFrag);
                         t.commit();
-                        t.addToBackStack(null);
                         currentFragment = R.id.navigation_home;
                     }
                     return true;
                 case R.id.navigation_search:
                     if (currentFragment != R.id.navigation_search){
+                        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                         Fragment mFrag1 = new SearchFragment();
                         t.replace(R.id.frameLayout, mFrag1);
                         t.commit();
@@ -68,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_orders:
                     if (currentFragment != R.id.navigation_orders){
+                        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                         Fragment mFrag2 = new OrderFragment();
                         t.replace(R.id.frameLayout, mFrag2);
                         t.commit();
@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_carts:
                     if (currentFragment != R.id.navigation_carts) {
+                        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                         Fragment mFrag3 = new CartFragment();
                         t.replace(R.id.frameLayout, mFrag3);
                         t.commit();
@@ -84,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_favourites:
                     if (currentFragment != R.id.navigation_favourites) {
+                        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                         Fragment mFrag4 = new FavouriteFragment();
                         t.replace(R.id.frameLayout, mFrag4);
                         t.commit();

@@ -157,8 +157,6 @@ public class OrderFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_orders)
-            HomeActivity.navView.setSelectedItemId(R.id.navigation_orders);
     }
 }
 

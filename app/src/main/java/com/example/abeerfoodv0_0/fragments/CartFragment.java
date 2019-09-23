@@ -523,8 +523,7 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_carts)
-            HomeActivity.navView.setSelectedItemId(R.id.navigation_carts);
+
         if (!checkPlayServices()) {
             DynamicToast.makeError(getActivity(), "You need to install Google Play Services to use the App properly", Toast.LENGTH_SHORT).show();
         }

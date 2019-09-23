@@ -286,8 +286,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_search)
-            HomeActivity.navView.setSelectedItemId(R.id.navigation_search);
     }
 }
 

@@ -408,10 +408,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_home) {
-            HomeActivity.navView.setSelectedItemId(R.id.navigation_home);
-            HomeActivity.currentFragment = R.id.navigation_home;
-        }
         String userName = "<u>"+ Constraints.currentUser.getName() +"</u>";
         userNameTV.setText(Html.fromHtml(userName));
         sliderLayout.startAutoCycle();
