@@ -66,6 +66,13 @@ public class SignInActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         mProgressDialog = new ProgressDialog(this);
 
+        forgotPassTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class));
+            }
+        });
+
         emailET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

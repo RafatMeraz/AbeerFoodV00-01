@@ -42,6 +42,8 @@ public class Constraints {
     public static final String ORDERS_URL = BASE_URL +"allOrderOfUser.php";
     public static final String ORDER_FOOD_URL = BASE_URL +"insertOrder.php";
     public static final String UPLOAD_PROFILE_IMAGE_URL = BASE_URL +"uploadProfileImg.php";
+    public static final String FORGOT_PASSWORD_URL = BASE_URL +"forgotPassword.php";
+    public static final String UPDATE_PASSWORD = BASE_URL +"updatePassword.php";
 
     public static User currentUser;
     public static User currentUserDetails;

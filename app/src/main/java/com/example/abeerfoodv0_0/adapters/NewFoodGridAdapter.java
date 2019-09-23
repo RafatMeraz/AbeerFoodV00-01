@@ -85,12 +85,9 @@ public class NewFoodGridAdapter extends BaseAdapter {
                 if (new DatabaseHandler(mContext).isFav(shopArrayList.get(position).getId(), Constraints.currentUser.getId())) {
                     new DatabaseHandler(mContext).removeToFavourites(shopArrayList.get(position).getId(), Constraints.currentUser.getId());
                     favIV.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp));
-                    DynamicToast.makeSuccess(mContext,"Removed from favourite!", Toast.LENGTH_SHORT).show();
-
                 } else {
                     new DatabaseHandler(mContext).addFav(shopArrayList.get(position), Constraints.currentUser.getId());
                     favIV.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_favorite_full));
-                    DynamicToast.makeSuccess(mContext,"Added to favourite!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

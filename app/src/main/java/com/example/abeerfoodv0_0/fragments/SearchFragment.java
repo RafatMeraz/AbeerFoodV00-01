@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.HomeActivity;
 import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
 import com.example.abeerfoodv0_0.adapters.FavouriteAdapter;
@@ -112,20 +113,6 @@ public class SearchFragment extends Fragment {
             startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
         }
 
-        searchRV.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), searchRV ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
-                        intent.putExtra("shop_id", shopList.get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
 
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
@@ -147,7 +134,6 @@ public class SearchFragment extends Fragment {
         searchBar.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
             @Override
             public void OnItemClickListener(int position, View v) {
-                Toast.makeText(getActivity(), "erer", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -187,20 +173,6 @@ public class SearchFragment extends Fragment {
 
         FavouriteAdapter searchAdapter = new FavouriteAdapter(resultShopList, getActivity());
         searchRV.setAdapter(searchAdapter);
-        searchRV.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), searchRV ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
-                        intent.putExtra("shop_id", resultShopList.get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
     }
 
 
@@ -311,8 +283,12 @@ public class SearchFragment extends Fragment {
 
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_search)
+            HomeActivity.navView.setSelectedItemId(R.id.navigation_search);
+    }
 }
 
 

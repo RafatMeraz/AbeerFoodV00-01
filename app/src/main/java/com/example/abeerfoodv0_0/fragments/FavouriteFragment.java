@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.HomeActivity;
 import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
 import com.example.abeerfoodv0_0.adapters.FavouriteAdapter;
@@ -113,4 +114,10 @@ public class FavouriteFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_favourites)
+            HomeActivity.navView.setSelectedItemId(R.id.navigation_favourites);
+    }
 }

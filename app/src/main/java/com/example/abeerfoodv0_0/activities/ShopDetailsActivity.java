@@ -84,7 +84,12 @@ public class ShopDetailsActivity extends AppCompatActivity {
         rootSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadShopList(currentShopID);
+                if (Constraints.isConnectedToInternet(getApplicationContext())) {
+                    loadShopDetails(currentShopID);
+                } else{
+                    startActivity(new Intent(getApplicationContext(), NetConnectionFailedActivity.class));
+                    finish();
+                }
             }
         });
 
@@ -134,11 +139,9 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 if (new DatabaseHandler(getApplicationContext()).isFav(currentShop.getId(), Constraints.currentUser.getId())) {
                     new DatabaseHandler(getApplicationContext()).removeToFavourites(currentShop.getId(), Constraints.currentUser.getId());
                     favIV.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp));
-                    DynamicToast.makeSuccess(getApplicationContext(),"Removed from favourite!", Toast.LENGTH_SHORT).show();
                 } else {
                     new DatabaseHandler(getApplicationContext()).addFav(currentShop, Constraints.currentUser.getId());
                     favIV.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.ic_favorite_full));
-                    DynamicToast.makeSuccess(getApplicationContext(),"Added to favourite!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

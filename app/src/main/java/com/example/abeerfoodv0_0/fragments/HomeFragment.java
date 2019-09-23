@@ -36,6 +36,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.HomeActivity;
 import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.activities.ProfileActivity;
 import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
@@ -125,10 +126,15 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         homeSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                homeSwipeRefreshLayout.setRefreshing(true);
-                loadShopList();
-                loadSliders();
-                loadNewShopList();
+                if (Constraints.isConnectedToInternet(getActivity())) {
+                    homeSwipeRefreshLayout.setRefreshing(true);
+                    loadShopList();
+                    loadSliders();
+                    loadNewShopList();
+                } else {
+                    startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+                    getActivity().finish();
+                }
             }
         });
 
@@ -138,22 +144,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark
         );
-
-        allShopsRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), allShopsRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                        Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
-                        intent.putExtra("shop_id", shopList.get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
-
 
         userNameTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,6 +408,10 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     @Override
     public void onResume() {
         super.onResume();
+        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_home) {
+            HomeActivity.navView.setSelectedItemId(R.id.navigation_home);
+            HomeActivity.currentFragment = R.id.navigation_home;
+        }
         String userName = "<u>"+ Constraints.currentUser.getName() +"</u>";
         userNameTV.setText(Html.fromHtml(userName));
         sliderLayout.startAutoCycle();

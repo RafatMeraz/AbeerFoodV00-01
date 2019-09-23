@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView backButton;
     private CircleImageView userImageIV;
     private TextView userFullNameTV, emailTV, phoneTV, address1TV, address2TV;
-    private Button editButton, logOutButton;
+    private Button editButton;
+    private CardView logOutButton, changePasswordButton;
     private User user;
 
     @Override
@@ -56,12 +58,21 @@ public class ProfileActivity extends AppCompatActivity {
         logOutButton = findViewById(R.id.profileLogOutButton);
         address2TV = findViewById(R.id.profileAddress2TV);
         editButton = findViewById(R.id.profileEditButton);
+        changePasswordButton = findViewById(R.id.changePasswordCardView);
+
         if (Constraints.isConnectedToInternet(getApplicationContext()))
             loadUserDetails(Constraints.currentUser.getId());
         else{
             startActivity(new Intent(getApplicationContext(), NetConnectionFailedActivity.class));
             finish();
         }
+
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

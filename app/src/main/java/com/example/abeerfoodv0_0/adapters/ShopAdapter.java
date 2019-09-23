@@ -1,7 +1,9 @@
 package com.example.abeerfoodv0_0.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.ShopDetailsActivity;
 import com.example.abeerfoodv0_0.database.DatabaseHandler;
 import com.example.abeerfoodv0_0.model.Shop;
 import com.example.abeerfoodv0_0.utils.Constraints;
@@ -46,13 +49,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.MyViewHolder> 
         if (new DatabaseHandler(context).isFav(shopArrayList.get(i).getId(), Constraints.currentUser.getId())) {
             myViewHolder.favIV.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_full));
         }
-        myViewHolder.favIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                DynamicToast.makeSuccess(context,"Removed from favourite!", Toast.LENGTH_SHORT).show();
-            }
-        });
         myViewHolder.favIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +67,15 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.MyViewHolder> 
             Picasso.with(context).load(Constraints.IMG_BASE_URL+shopArrayList.get(i).getImage()).into(myViewHolder.restaurantIV);
         }
 
+        myViewHolder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShopDetailsActivity.class);
+                intent.putExtra("shop_id", shopArrayList.get(i).getId());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -78,16 +84,18 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView shopNameTV, locationTV, openingTV, categoryTV;
+        TextView shopNameTV, locationTV, openingTV;
         ImageView restaurantIV, activeStatusIV, favIV;
+        ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             shopNameTV = itemView.findViewById(R.id.shopDetailShopNameTV);
             locationTV = itemView.findViewById(R.id.shopDetailLocationTV);
             openingTV = itemView.findViewById(R.id.shopDetailOpenHoursTV);
             activeStatusIV = itemView.findViewById(R.id.shopDetailActiveStateImgView);
-            favIV = itemView.findViewById(R.id.singleNewShopFavouriteIV);
+            favIV = itemView.findViewById(R.id.singleShopFavouriteIV);
             restaurantIV = itemView.findViewById(R.id.restaurantImgView);
+            constraintLayout = itemView.findViewById(R.id.singleShopConstraintLayout);
         }
     }
 

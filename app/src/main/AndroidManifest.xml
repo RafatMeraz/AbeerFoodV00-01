@@ -18,28 +18,55 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.ChangePasswordActivity"></activity>
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCnAshnftutXbB_W5RISmmL4kapxcX2iOc"/>
-        <activity android:name=".activities.MapActivity"></activity>
-        <activity android:name=".activities.SplashActivity">
+            android:value="AIzaSyCnAshnftutXbB_W5RISmmL4kapxcX2iOc" />
+
+        <activity
+            android:name=".activities.MapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NetConnectionFailedActivity" />
-        <activity android:name=".activities.EditProfileActivity" />
-        <activity android:name=".activities.FoodDetailsActivity" />
-        <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.ShopDetailsActivity" />
-        <activity android:name=".activities.Home" />
+        <activity
+            android:name=".activities.NetConnectionFailedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FoodDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ShopDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.Home"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
-            android:label="@string/title_activity_home" />
-        <activity android:name=".activities.SignInActivity" />
-        <activity android:name=".activities.SignUpActivity"></activity>
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

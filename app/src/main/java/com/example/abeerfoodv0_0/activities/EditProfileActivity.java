@@ -10,9 +10,12 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -76,6 +79,71 @@ public class EditProfileActivity extends AppCompatActivity {
         address2ET = findViewById(R.id.editProfileAddress2ET);
         backButton = findViewById(R.id.editProfileBackButton);
         saveButton = findViewById(R.id.editProfileSaveButton);
+
+        nameET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        emailET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        phoneET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        address1ET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         nameET.setText(currentUser.getName());
         emailET.setText(currentUser.getEmail());
@@ -223,4 +291,29 @@ public class EditProfileActivity extends AppCompatActivity {
         //adding our stringrequest to queue
         Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
     }
+
+    private void checkInputs() {
+        if (!TextUtils.isEmpty(nameET.getText().toString())){
+            if (!TextUtils.isEmpty(emailET.getText().toString()) && Patterns.EMAIL_ADDRESS.matcher(emailET.getText().toString()).matches()) {
+                if (!TextUtils.isEmpty(phoneET.getText().toString())){
+                    if (!TextUtils.isEmpty(address1ET.getText().toString())){
+                        saveButton.setEnabled(true);
+                    }else {
+                        saveButton.setEnabled(false);
+                        address1ET.setError("Enter your password more than 6 characters.");
+                    }
+                } else {
+                    saveButton.setEnabled(false);
+                    phoneET.setError("Enter your password more than 6 characters.");
+                }
+            } else {
+                saveButton.setEnabled(false);
+                emailET.setError("Enter your valid email address.");
+            }
+        } else {
+            saveButton.setEnabled(false);
+            nameET.setError("Enter your name");
+        }
+    }
+
 }

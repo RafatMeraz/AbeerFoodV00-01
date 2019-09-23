@@ -1,9 +1,11 @@
 package com.example.abeerfoodv0_0.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.HomeActivity;
 import com.example.abeerfoodv0_0.activities.NetConnectionFailedActivity;
 import com.example.abeerfoodv0_0.adapters.OrderAdapter;
 import com.example.abeerfoodv0_0.adapters.ShopAdapter;
@@ -49,19 +52,21 @@ public class OrderFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ArrayList<com.example.abeerfoodv0_0.model.Request> orderList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public OrderFragment() {
         // Required empty public constructor
     }
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_order, container, false);
         recyclerView = rootView.findViewById(R.id.orderHistoryRecyclerView);
-
+        swipeRefreshLayout = rootView.findViewById(R.id.orderSwipeRefreshLayout);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -73,6 +78,26 @@ public class OrderFragment extends Fragment {
             startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
             getActivity().finish();
         }
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (Constraints.isConnectedToInternet(getActivity())) {
+                    swipeRefreshLayout.setRefreshing(true);
+                    loadAllOrder(Constraints.currentUser.getId());
+                } else {
+                    startActivity(new Intent(getActivity(), NetConnectionFailedActivity.class));
+                    getActivity().finish();
+                }
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeColors(
+                R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark
+        );
         return rootView;
     }
 
@@ -104,6 +129,7 @@ public class OrderFragment extends Fragment {
                             Collections.reverse(orderList);
                             OrderAdapter adapter = new OrderAdapter(orderList, getActivity());
                             recyclerView.setAdapter(adapter);
+                            swipeRefreshLayout.setRefreshing(false);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -128,8 +154,11 @@ public class OrderFragment extends Fragment {
         Volley.newRequestQueue(getActivity()).add(stringRequest);
     }
 
-
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_orders)
+            HomeActivity.navView.setSelectedItemId(R.id.navigation_orders);
+    }
 }
 

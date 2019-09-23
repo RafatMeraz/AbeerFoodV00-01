@@ -40,6 +40,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.abeerfoodv0_0.R;
+import com.example.abeerfoodv0_0.activities.HomeActivity;
 import com.example.abeerfoodv0_0.adapters.CartAdapter;
 import com.example.abeerfoodv0_0.database.DatabaseHandler;
 import com.example.abeerfoodv0_0.database.SharedPrefManager;
@@ -192,6 +193,7 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
                                     totalPrice = 0.00;
                                     totalCostTV.setText(String.valueOf(totalPrice));
                                     blankCartTV.setVisibility(View.VISIBLE);
+                                    cardView.setVisibility(View.GONE);
                                     }
                             })
                             .setCancelable(false)
@@ -521,11 +523,15 @@ public class CartFragment extends Fragment implements GoogleApiClient.Connection
     @Override
     public void onResume() {
         super.onResume();
+        if (HomeActivity.navView.getSelectedItemId() != R.id.navigation_carts)
+            HomeActivity.navView.setSelectedItemId(R.id.navigation_carts);
         if (!checkPlayServices()) {
             DynamicToast.makeError(getActivity(), "You need to install Google Play Services to use the App properly", Toast.LENGTH_SHORT).show();
         }
 
     }
+
+
 
     @Override
     public void onConnectionSuspended(int i) {
